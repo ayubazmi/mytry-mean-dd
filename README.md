@@ -6,7 +6,7 @@
 This project contains a complete MEAN stack (MongoDB, Express.js, Angular, Node.js) fully Dockerized and deployed using Docker Compose...  
 It includes an automated CI/CD pipeline using Jenkins that:
 
-- Builds updated Docker images for frontend & backend
+- Builds updated Docker images for frontend & backend.
 - Pushes images to Docker Hub
 - Updates docker-compose.yml with new tags
 - Automatically redeploys the application on the server
