@@ -11,15 +11,16 @@ pipeline {
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/ayubazmi/mytry-mean-dd.git', 
-                    branch: 'main', 
+                    branch: 'main',
                     credentialsId: env.GITHUB_CRED
-            }
+                }
         }
 
         stage('Build Frontend Image') {
             steps {
                 sh """
                 docker build -t ayubazmi/frontend:${BUILD_NUMBER} ./frontend
+                docker tag ayubazmi/frontend:${BUILD_NUMBER} ayubazmi/frontend:latest
                 """
             }
         }
@@ -28,6 +29,7 @@ pipeline {
             steps {
                 sh """
                 docker build -t ayubazmi/backend:${BUILD_NUMBER} ./backend
+                docker tag ayubazmi/backend:${BUILD_NUMBER} ayubazmi/backend:latest
                 """
             }
         }
@@ -42,7 +44,9 @@ pipeline {
                     sh """
                     echo \$PASSWORD | docker login -u \$USERNAME --password-stdin
                     docker push ayubazmi/frontend:${BUILD_NUMBER}
+                    docker push ayubazmi/frontend:latest
                     docker push ayubazmi/backend:${BUILD_NUMBER}
+                    docker push ayubazmi/backend:latest
                     """
                 }
             }
@@ -51,7 +55,7 @@ pipeline {
         stage('Deploy Locally') {
             steps {
                 sh """
-                cd /root/Desktop/mytry-mean-dd       
+                cd /root/Desktop/mytry-mean-dd
                 docker compose pull
                 docker compose up -d
                 """
