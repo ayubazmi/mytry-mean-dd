@@ -56,8 +56,8 @@ pipeline {
             steps {
                 sh """
                 cd /home/ubuntu/mytry-mean-dd
-                docker compose pull
-                docker compose up -d
+                docker-compose pull
+                docker-compose up -d
                 """
             }
         }
