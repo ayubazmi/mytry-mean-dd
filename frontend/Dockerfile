@@ -1,4 +1,4 @@
-# ---------- Build Stage ----------
+# --------------------
 FROM node:18-alpine AS build
 
 WORKDIR /app
@@ -10,7 +10,7 @@ COPY . .
 
 RUN npx ng build --project angular-15-crud --configuration production
 
-# ---------- Nginx Stage ----------
+# ------------------------
 FROM nginx:alpine
 
 COPY --from=build /app/dist/angular-15-crud /usr/share/nginx/html

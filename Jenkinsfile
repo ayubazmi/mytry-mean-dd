@@ -51,7 +51,7 @@ pipeline {
         stage('Deploy Locally') {
             steps {
                 sh """
-                cd /mytry-mean-dd        # path where your docker-compose.yml exists
+                cd /root/Desktop/mytry-mean-dd       
                 docker compose pull
                 docker compose up -d
                 """
