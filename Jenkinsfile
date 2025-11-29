@@ -55,9 +55,9 @@ pipeline {
         stage('Deploy Locally') {
             steps {
                 sh """
-                cd /home/ubuntu/mytry-mean-dd
-                docker-compose pull
-                docker-compose up -d
+                cd /root/Desktop/mytry-mean-dd
+                docker compose pull
+                docker compose up -d
                 """
             }
         }
