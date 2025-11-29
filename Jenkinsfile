@@ -10,27 +10,25 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/ayubazmi/mytry-mean-dd.git', branch: 'main', credentialsId: env.GITHUB_CRED
+                git url: 'https://github.com/ayubazmi/mytry-mean-dd.git', 
+                    branch: 'main', 
+                    credentialsId: env.GITHUB_CRED
             }
         }
 
         stage('Build Frontend Image') {
             steps {
-                script {
-                    sh """
-                    docker build -t ayubazmi/frontend:${BUILD_NUMBER} ./frontend
-                    """
-                }
+                sh """
+                docker build -t ayubazmi/frontend:${BUILD_NUMBER} ./frontend
+                """
             }
         }
 
         stage('Build Backend Image') {
             steps {
-                script {
-                    sh """
-                    docker build -t ayubazmi/backend:${BUILD_NUMBER} ./backend
-                    """
-                }
+                sh """
+                docker build -t ayubazmi/backend:${BUILD_NUMBER} ./backend
+                """
             }
         }
 
@@ -49,14 +47,20 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy Locally') {
+            steps {
+                sh """
+                cd /mytry-mean-dd        # path where your docker-compose.yml exists
+                docker compose pull
+                docker compose up -d
+                """
+            }
+        }
     }
 
     post {
-        success {
-            echo "Images pushed successfully!"
-        }
-        failure {
-            echo "Pipeline failed."
-        }
+        success { echo "Deployment successful!" }
+        failure { echo "Pipeline failed." }
     }
 }
